@@ -51,6 +51,7 @@ module.exports = {
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    hot: true,
     historyApiFallback: true,
     noInfo: true,
     overlay: true
@@ -59,7 +60,9 @@ module.exports = {
     hints: false
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    }),
     new CleanWebpackPlugin()
   ],
   devtool: '#eval-source-map'
