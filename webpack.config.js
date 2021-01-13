@@ -1,5 +1,6 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -53,6 +54,9 @@ module.exports = {
   performance: {
     hints: false
   },
+  plugins: [
+    new HtmlWebpackPlugin()
+  ],
   devtool: '#eval-source-map'
 }
 
