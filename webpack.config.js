@@ -52,6 +52,8 @@ module.exports = {
   },
   devServer: {
     hot: true,
+    contentBase: path.join(__dirname, 'dist'),
+    openPage: 'dist',
     historyApiFallback: true,
     noInfo: true,
     overlay: true
@@ -61,7 +63,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      inject: true,
+//      cache: false,
+      template: 'src/index.html',
+      vue: true
     }),
     new CleanWebpackPlugin()
   ],
