@@ -8,6 +8,7 @@
       Добавить слой
     </button>
     <hr>
+
     <div class="row align-items-start">
       <div class="cake col"
            v-on:drop="drop"
@@ -25,6 +26,11 @@
              v-on:dragleave="dragLeave"
              draggable
         >
+        </div>
+        <div class="form-text" v-show="hasLayers">
+          Левая кнопка мыши - увеличить слой <br>
+          Правая уменьшить <br>
+          Слои можно менять местами, перетаскивая <br>
         </div>
       </div>
       <div class="cake-table-div col" v-show="hasLayers">
