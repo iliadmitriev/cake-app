@@ -22,7 +22,7 @@
              v-on:click.right="mouseClick(layer, 'dec')"
              v-on:contextmenu.prevent
              v-on:dragstart="dragStart"
-             v-on:drag="drag"
+             v-on:dragleave="dragLeave"
              draggable
         >
         </div>
@@ -70,7 +70,9 @@
       </div>
     </div>
     <hr>
-    <div class="price alert alert-success">Цена <strong>{{ calcPrice | moneyRub }}</strong> руб</div>
+    <div class="price alert alert-success">
+      Цена <strong>{{ calcPrice | moneyRub }}</strong> руб
+    </div>
 
   </div>
 </template>
@@ -122,14 +124,12 @@ export default {
         layer.height -= 1
       }
     },
-    drag(ev) {
-      ev.target.classList.add('dragging')
-    },
     dragStart(event) {
       this.draggingElement = event.target
     },
     drop(event) {
       this.draggingElement.classList.remove('dragging')
+      event.target.classList.remove('drag-over')
       const from = this.draggingElement.dataset.id
       const to = event.target.dataset.id
       const arr = this.layers
@@ -140,6 +140,10 @@ export default {
     },
     allowDrop(ev) {
       ev.preventDefault()
+      ev.target.classList.add('drag-over')
+    },
+    dragLeave(ev) {
+      ev.target.classList.remove('drag-over')
     }
   },
   filters: {
@@ -181,6 +185,12 @@ export default {
 }
 
 .dragging {
+  opacity: 0.5;
+}
+
+.drag-over {
+  border: 1px solid;
+  border-color: #000;
   opacity: 0.5;
 }
 
