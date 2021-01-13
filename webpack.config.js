@@ -1,12 +1,16 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
 
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    publicPath: process.env.NODE_ENV === 'production'
+        ? ''
+        : '/dist/',
     filename: 'build.js'
   },
   module: {
@@ -55,7 +59,8 @@ module.exports = {
     hints: false
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin(),
+    new CleanWebpackPlugin()
   ],
   devtool: '#eval-source-map'
 }

@@ -27,7 +27,7 @@
         >
         </div>
       </div>
-      <div class="cake-table-div col">
+      <div class="cake-table-div col" v-show="hasLayers">
         <table class="table table-bordered">
           <thead>
           <tr>
@@ -70,7 +70,7 @@
       </div>
     </div>
     <hr>
-    <div class="price alert alert-success">
+    <div class="price alert alert-success" v-show="hasLayers">
       Цена <strong>{{ calcPrice | moneyRub }}</strong> руб
     </div>
 
@@ -103,7 +103,12 @@ export default {
   },
   computed: {
     calcPrice() {
-      return this.layers.reduce((s, i) => s + (i.height * this.layerTypes[i.type].price), 0)
+      return this.layers.reduce((s, i) => {
+          return s + (i.height * this.layerTypes[i.type].price)
+        }, 0)
+    },
+    hasLayers() {
+      return this.layers.length > 0
     }
   },
   methods: {
