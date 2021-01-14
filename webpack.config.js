@@ -1,7 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 
 
 module.exports = {
@@ -9,8 +10,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: process.env.NODE_ENV === 'production'
-        ? ''
-        : '/dist/',
+      ? ''
+      : '/dist/',
     filename: 'build.js'
   },
   module: {
@@ -19,14 +20,14 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
+          'sass-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {
-          }
+          loaders: {}
           // other vue-loader options go here
         }
       },
@@ -53,7 +54,7 @@ module.exports = {
   devServer: {
     hot: true,
     contentBase: path.join(__dirname, 'dist'),
-    openPage: 'dist',
+    openPage: 'dist/',
     historyApiFallback: true,
     noInfo: true,
     overlay: true
@@ -64,13 +65,18 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-//      cache: false,
       template: 'src/index.html',
       vue: true
     }),
     new CleanWebpackPlugin()
   ],
   devtool: '#eval-source-map'
+}
+
+if (process.env.NODE_ENV === 'development') {
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new BundleAnalyzerPlugin()
+  ])
 }
 
 if (process.env.NODE_ENV === 'production') {
