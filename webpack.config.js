@@ -34,7 +34,10 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        options: {
+
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -90,6 +93,13 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
+      minimize: true,
+      parallel: true,
+      uglifyOptions: {
+        compress: true,
+        ecma: 6,
+        mangle: true
+      },
       compress: {
         warnings: false
       }
