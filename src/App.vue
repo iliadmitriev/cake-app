@@ -78,7 +78,21 @@
     <hr>
     <div class="price alert alert-success" v-show="hasLayers">
       Цена <strong>{{ calcPrice | moneyRub }}</strong> руб
+      <button class="btn btn-warning" v-on:click="showOrderWindow">
+        Заказать
+      </button>
     </div>
+    <b-modal
+      id="orderWindow"
+      title="Заказать"
+      v-model="confirmForm"
+      ok-title="Заказать"
+      ok-variant="btn btn-primary"
+      cancel-title="Отмена"
+      cancel-variant="btn btn-danger"
+    >
+      Оформить заказ?
+    </b-modal>
 
   </div>
 </template>
@@ -87,6 +101,7 @@
 export default {
   data() {
     return {
+      confirmForm: false,
       layers: [],
       defaultType: 'biscuit',
       defaultHeight: 4,
@@ -155,6 +170,9 @@ export default {
     },
     dragLeave(ev) {
       ev.target.classList.remove('drag-over')
+    },
+    showOrderWindow() {
+      this.confirmForm = true
     }
   },
   filters: {
@@ -167,7 +185,30 @@ export default {
 }
 </script>
 
+<style lang="scss">
+/*@import "~bootstrap/scss/bootstrap.scss";*/
+/* above line includes whole bootstrap library */
+
+/* these following lines includes only needed
+   modules for modal window
+   order is important */
+
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/_mixins.scss";
+@import "~bootstrap/scss/_close.scss";
+@import "~bootstrap/scss/_modal.scss";
+
+/* killer feature, include whole bootstrap-vue */
+/*@import '~bootstrap-vue/dist/bootstrap-vue.css';*/
+
+/* includes only modal window styles */
+@import "~bootstrap-vue/src/components/modal/index.scss";
+
+</style>
+
 <style scoped>
+
 .cake-layer {
   margin: 0 0px;
   border: 1px solid transparent;
